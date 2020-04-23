@@ -14,7 +14,7 @@ Excel Macro for quick data operation
 ## Funcs.bas
 
 |  Function  |  F/S |  Description  |
-| ---- | ---- |
+| ---- | ---- | ---- |
 |  ColorIndex(cell)  | F  | Returns color index number  |
 |  MakeBoxCode  | F  | make three digits inch value (25.4,50.8,25.4,"A") -> "A001002001"  |
 |  CopyTextToClipboard  | F  | Copy string to clipboard  |
