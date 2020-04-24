@@ -1,7 +1,7 @@
 # TonoExcelUtilities
 Excel Macro for quick data operation
 
-## Module (number).bas
+## KeyMacros.bas
 
 |  Function  |  Shortcut key  |  Description  |
 | ---- | ---- | ---- |
@@ -29,4 +29,18 @@ Excel Macro for quick data operation
 |  LineDuplication  | S  | Duplicate a row by the numerical value of the specified column |
 
 F = Function / S = Subroutine
+
+## How to install
+
+1. Open excel file
+2. Set visible "Developer" tab in excel ribbon
+3. Click [Record Macro] button in the Developer tab
+4. Select the combobox "Store macro in:" to "Personal Macro Workbook" 
+5. Click [OK]
+6. Click [Stop Recording] button in developer tab to make personal macro automatically.
+7. Click [Visual Basic] button in the Developer tab
+8. Open context menu on the "VBAProject(PERSONAL.XLSB)"
+9. Import the ***.bas files
+
+
 
