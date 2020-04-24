@@ -1,6 +1,6 @@
-' Tono Excel Utilities (c) 2019 Manabu Tonosaki Licensed under the MIT license.
-
 Attribute VB_Name = "Funcs"
+' Tono Excel Utilities (c) 2020 Manabu Tonosaki Licensed under the MIT license.
+
 
 ' Get Color Index of a range
 Function ColorIndex(r As Range) As Integer
@@ -215,4 +215,5 @@ VALERR:
     Application.ScreenUpdating = False
     MsgBox org.Address & " is not a value of duplication"
 End Sub
+
 

@@ -27,6 +27,7 @@ Excel Macro for quick data operation
 |  Rounddown36  | F  | Get round down value divisible by 36 |
 |  Rounddown12348  | F  | Get round down value divisible by values 1,2,3,4 and 8 |
 |  LineDuplication  | S  | Duplicate a row by the numerical value of the specified column |
+|  GetSoloName  | S  | Make unique key |
 
 F = Function / S = Subroutine
 

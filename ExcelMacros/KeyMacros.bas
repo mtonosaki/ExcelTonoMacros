@@ -1,5 +1,5 @@
 Attribute VB_Name = "KeyMacros"
-' Tono Excel Utilities (c) 2019 Manabu Tonosaki Licensed under the MIT license.
+' Tono Excel Utilities (c) 2020 Manabu Tonosaki Licensed under the MIT license.
 
 Sub MacroCSV()
 Attribute MacroCSV.VB_Description = "Value Paste"
