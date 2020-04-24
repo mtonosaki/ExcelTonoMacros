@@ -6,6 +6,7 @@ Excel Macro for quick data operation
 |  Function  |  Shortcut key  |  Description  |
 | ---- | ---- | ---- |
 |  MacroCSF  |  [CTRL]+[SHIFT]+[F]  |  ON/OFF Auto Filter at the selected row  |
+|  MacroCSH  |  [CTRL]+[SHIFT]+[H]  |  Format selected cells to yyyy/mm/dd hh:mm:ss  |
 |  MacroCSM  |  [CTRL]+[SHIFT]+[M]  |  Merge / Unmerge the selected cells  |
 |  MacroCST  |  [CTRL]+[SHIFT]+[T]  |  Quick sheet auto format/arrage  |
 |  MacroCSV  |  [CTRL]+[SHIFT]+[V]  |  Paste as value  |
