@@ -1,5 +1,5 @@
-# TonoExcelUtilities
-Excel Macro for quick data operation
+# ExcelTonoMacros
+Excel Keybord Macros / Utilities for your rapid operation.
 
 ## KeyMacros.bas
 
