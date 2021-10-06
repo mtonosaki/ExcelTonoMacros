@@ -1,9 +1,6 @@
-Attribute VB_Name = "KeyMacros"
 ' Tono Excel Utilities (c) 2020 Manabu Tonosaki Licensed under the MIT license.
 
 Sub MacroCSV()
-Attribute MacroCSV.VB_Description = "Value Paste"
-Attribute MacroCSV.VB_ProcData.VB_Invoke_Func = "V\n14"
 '
 ' MacroCSV Macro
 ' Value Paste
@@ -14,8 +11,6 @@ Attribute MacroCSV.VB_ProcData.VB_Invoke_Func = "V\n14"
 End Sub
 
 Sub MacroCSF()
-Attribute MacroCSF.VB_Description = "Auto filter"
-Attribute MacroCSF.VB_ProcData.VB_Invoke_Func = "F\n14"
 '
 ' MacroCSF Macro
 ' Auto filter
@@ -25,30 +20,52 @@ Attribute MacroCSF.VB_ProcData.VB_Invoke_Func = "F\n14"
     On Error GoTo NOR
     Dim r As Range
     Set r = Selection
-    If r.Rows.Count = 1 And r.Columns.Count >= 4 Then
+    If r.Rows.Count = 1 And r.Columns.Count > 1 Then
         r.AutoFilter
-        End
+        GoTo NOR2
     End If
 NOR:
     On Error GoTo NOR2
+    RMAX = 24
     Dim re As Range
-    Set re = r.Rows(1).Columns(1).EntireRow
-    Dim re1 As Range
-    Set re1 = re.Rows(1).Columns(1)
-    If re1 = "" Then
-        re1 = "@@dummy__@@"
+    For i = 1 To RMAX
+        Set r = Range("A1").Offset(i - 1, 0)
+        For st = 0 To 25
+            If r.Offset(0, st).Value <> "" Then
+                Exit For
+            End If
+        Next
+        blankN = 0
+        For ed = st To st + 26
+            If r.Offset(0, ed).Value = "" Then
+                blankN = blankN + 1
+                If blankN > 4 Then
+                    ed = ed - blankN
+                    Exit For
+                End If
+            Else
+                blankN = 0
+            End If
+        Next
+        Set re0 = Range(r.Offset(0, st).Address, r.Offset(0, ed).Address)
+        If re Is Nothing Then  ' find the first longest row
+            Set re = re0
+        End If
+        If re0.Cells.Count > re.Cells.Count Then
+            Set re = re0
+        End If
+    Next
+    If re Is Nothing Then
+        MsgBox "Cannot find table header row", vbOKOnly, "WARNING"
+    Else
+        re.AutoFilter
     End If
-    re.AutoFilter
-    If re1 = "@@dummy__@@" Then
-        re1 = ""
-    End If
+
 NOR2:
     On Error GoTo 0
 End Sub
 
 Sub MacroCST()
-Attribute MacroCST.VB_Description = "Formatting"
-Attribute MacroCST.VB_ProcData.VB_Invoke_Func = "T\n14"
 '
 ' MacroCST Macro
 ' Formatting
@@ -84,20 +101,23 @@ Attribute MacroCST.VB_ProcData.VB_Invoke_Func = "T\n14"
 End Sub
 
 Sub MacroCSW()
-Attribute MacroCSW.VB_Description = "Set/Reset Freeze window position"
-Attribute MacroCSW.VB_ProcData.VB_Invoke_Func = "W\n14"
 '
     ' MacroCSW Macro
     ' Set/Reset Freeze window position
     '
     ' Keyboard Shortcut: Ctrl+Shift+W
     '
+    On Error GoTo ER
     ActiveWindow.FreezePanes = Not ActiveWindow.FreezePanes
+    GoTo FIN
+ER:
+    MsgBox "Cannot get/set FreezePanes property. Requested 'Enable Editing' mode.", vbInformation Or vbOKOnly, "ERROR"
+    On Error GoTo 0
+FIN:
+
 End Sub
 
 Sub MacroCSM()
-Attribute MacroCSM.VB_Description = "Merge Cells"
-Attribute MacroCSM.VB_ProcData.VB_Invoke_Func = "M\n14"
 '
     ' MacroCSM Macro
     ' Merge Cells
@@ -116,14 +136,54 @@ ERM:
 End Sub
 
 Sub MacroCSH()
-Attribute MacroCSH.VB_Description = "Change format to yyyy/mm/dd HH:MM:SS"
-Attribute MacroCSH.VB_ProcData.VB_Invoke_Func = "H\n14"
-'
+    '
     ' MacroCSH Macro
     ' Change format to yyyy/mm/dd HH:MM:SS
     '
     ' Keyboard Shortcut: Ctrl+Shift+H
     '
-    Selection.NumberFormat = "yyyy/mm/dd hh:mm:ss"
+    
+    Static PrevCshSelection As Range
+    Static CshStoryCounter As Integer
+    
+    On Error GoTo ER0
+    
+    If IsSameRange(PrevCshSelection, Selection) = False Then
+        CshStoryCounter = 0
+    Else
+        CshStoryCounter = CshStoryCounter + 1
+    End If
+    
+    Select Case CshStoryCounter Mod 3
+        Case 0
+            Selection.NumberFormat = "yyyy/mm/dd hh:mm:ss"
+        Case 1
+            Selection.NumberFormat = "yyyy/mm/dd hh:mm"
+        Case 2
+            Selection.NumberFormat = "yyyy/mm/dd"
+    End Select
     Selection.EntireColumn.AutoFit
+    Set PrevCshSelection = Selection
+ER0:
+    On Error GoTo 0
 End Sub
+
+Private Function IsSameRange(a As Range, b As Range) As Boolean
+    If a Is Nothing And b Is Nothing Then
+        IsSameRange = True
+        Exit Function
+    End If
+    If a Is Nothing Or b Is Nothing Then
+        IsSameRange = False
+        Exit Function
+    End If
+    If a.Address = b.Address Then
+        If a.Rows.Count = b.Rows.Count Then
+            If a.Columns.Count = b.Columns.Count Then
+                IsSameRange = True
+                Exit Function
+            End If
+        End If
+    End If
+    IsSameRange = False
+End Function
